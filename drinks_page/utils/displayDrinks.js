@@ -18,8 +18,8 @@ const displayDrinks = ({ drinks }) => {
       const { strDrinkThumb: src } = drink;
       const { strDrink: name } = drink;
 
-      return `<a href="drink.html ">
-          <article class="cocktail" data-set=${id}>
+      return `<a href="drink.html">
+          <article class="cocktail" data-id=${id}>
             <img src=${src} alt=${name} />
             <h3>${name}</h3>
           </article>
