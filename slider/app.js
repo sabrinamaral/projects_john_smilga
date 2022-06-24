@@ -22,7 +22,7 @@ container.innerHTML = people
             class="img"
             />
             <h4>${name}</h4>
-            <p class="title">${job}r</p>
+            <p class="title">${job}</p>
             <p class="text">
             ${text}
             </p>
@@ -39,9 +39,25 @@ const startSlider = (type) => {
   const last = getElement(".last");
 
   let next = active.nextElementSibling;
+  if (!next) {
+    next = container.firstElementChild;
+  }
   active.classList.remove(["active"]);
   last.classList.remove(["last"]);
   next.classList.remove(["next"]);
+
+  if (type === "prev") {
+    active.classList.add(["next"]);
+    last.classList.add(["active"]);
+    next = last.previousElementSibling;
+    if (!next) {
+      next = container.lastElementChild;
+    }
+    next.classList.remove(["next"]);
+    next.classList.add(["last"]);
+
+    return;
+  }
 
   active.classList.add(["last"]);
   last.classList.add(["next"]);
@@ -49,7 +65,7 @@ const startSlider = (type) => {
 };
 
 nextBtn.addEventListener("click", () => {
-  startSlider("last");
+  startSlider();
 });
 
 prevBtn.addEventListener("click", () => {
