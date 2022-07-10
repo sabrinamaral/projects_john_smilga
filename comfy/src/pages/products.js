@@ -10,14 +10,21 @@ import setupPrice from "../filters/price.js";
 
 // specific imports
 import display from "../displayProducts.js";
-import { store } from "../store.js";
+import { store, setupStore } from "../store.js";
 import { getElement } from "../utils.js";
+import fetchProducts from "../fetchProducts.js";
+import { allProductsUrl } from "../utils.js";
 
-const loading = getElement(".page-loading");
-
-display(store, getElement(".products-container"));
-setupSearch(store);
-setupCompanies(store);
-setupPrice(store);
-
-loading.style.display = "none";
+const init = async () => {
+  const loading = getElement(".page-loading");
+  if (store.length < 1) {
+    const products = await fetchProducts(allProductsUrl);
+    setupStore(products);
+  }
+  display(store, getElement(".products-container"));
+  setupSearch(store);
+  setupCompanies(store);
+  setupPrice(store);
+  loading.style.display = "none";
+};
+init();
